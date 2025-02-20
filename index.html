@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app='Module5Assignment'>
+
+<head>
+  <meta charset="utf-8">
+  <script src="angular.min.js"></script>
+  <script src="app.js"></script>
+  <script src="services/menu.service.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Module-5 Coding Assignment</title>
+</head>
+
+<body>
+  <div ng-controller='Module5Controller as ctrl'>
+    <h1>Module-5 Coding Assignment</h1>
+    <div>
+      <button ng-click="ctrl.ShowMyInfo()"><a>My Info</a></button>
+      <button ng-click="ctrl.ShowSignUp()"><a>Sign Up</a></button>
+    </div>
+    <br>
+    <div ng-if="ctrl.SignUp">
+      <fieldset>
+        <legend>Sign Up</legend>
+        <form name="SignUpForm" novalidate>
+          <div> First Name: <input type="text" name="FirstName" ng-model="ctrl.FirstName" required
+              placeholder="first name">{{ctrl.FirstName}}
+            <span ng-if="SignUpForm.FirstName.$error.required && SignUpForm.FirstName.$touched">
+              First name is required
+            </span>
+          </div>
+          <br>
+          <div> Last Name: <input type="text" name="LastName" ng-model="ctrl.LastName" required
+              placeholder="last name">{{ctrl.LastName}}
+            <span ng-if="SignUpForm.LastName.$error.required && SignUpForm.LastName.$touched">
+              Last name is required
+            </span>
+          </div>
+          <br>
+          <div> Email Address: <input type="email" name="EmailAddress" ng-model="ctrl.EmailAddress" required
+              placeholder="email"> {{ctrl.EmailAddress}}
+            <span ng-if="SignUpForm.EmailAddress.$invalid && SignUpForm.EmailAddress.$touched">
+              Must be valid email address: handle@domain format
+            </span>
+          </div>
+          <br>
+          <div> Phone Number: <input type="text" name="PhoneNumber" ng-model="ctrl.PhoneNumber"
+              ng-pattern="/^\d{10,15}$/" placeholder="phone ##########">{{ctrl.PhoneNumber}}
+            <span ng-if="SignUpForm.PhoneNumber.$invalid && SignUpForm.PhoneNumber.$touched">
+              Phone Number must in the format ###-###-####
+            </span>
+          </div>
+          <br>
+          <div> Favourite item: <input type="text" name="Favouriteitem" ng-model="ctrl.Favourite" required
+              placeholder="Favourite item" ng-keyup="ctrl.validateMenuItem()">{{ctrl.Favourite}}
+            <span ng-if="SignUpForm.Favouriteitem.$error.required && SignUpForm.Favouriteitem.$touched">
+              Favourite item is required
+            </span>
+            <span ng-if="!ctrl.isMenuItemExists && SignUpForm.Favouriteitem.$touched"> No such menu number exists</span>
+          </div>
+          <br>
+          <div> <button ng-disabled="SignUpForm.$invalid" ng-click="ctrl.signup()">Submit</button>
+            <span ng-if="ctrl.isFormSaved">Your information has been saved</span>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+    <div ng-if="ctrl.MyInfo">
+      <div ng-if="ctrl.LinktoSignUp">
+        Not Signed Up Yet. <a href="#" ng-click="ctrl.GotoSignUp()"> Sign up Now! </a>
+      </div>
+      <div ng-if="ctrl.userdetail">
+        <fieldset>
+          <legend>My Info</legend>
+          <div> First Name: <input type="text" ng-model="ctrl.FirstName" disabled>
+          </div>
+          <br>
+          <div> Last Name: <input type="text" ng-model="ctrl.LastName" disabled>
+          </div>
+          <br>
+          <div> Email Address: <input type="text" ng-model="ctrl.EmailAddress" disabled>
+          </div>
+          <br>
+          <div> Phone Number: <input type="text" ng-model="ctrl.PhoneNumber" disabled>
+          </div>
+          <br>
+          <div> Favourite item: <input type="text" ng-model="ctrl.Favourite" disabled>
+          </div>
+        </fieldset>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
